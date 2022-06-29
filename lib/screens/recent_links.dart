@@ -24,11 +24,11 @@ class _RecentLinksState extends State<RecentLinks> {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  const BezierHeaderCurves(),
-                  SizedBox(height: 30.h,),
-                  const RecentUrls(),
-                  const RecentUrlComponent(),
+                children:  const [
+                  BezierHeaderCurves(),
+                  // SizedBox(height: 30.h,),
+                  RecentUrls(),
+                  RecentUrlComponent(),
                 ],
               )
 
