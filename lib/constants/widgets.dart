@@ -1,4 +1,7 @@
 import 'package:bub_it/constants/colours.dart';
+import 'package:bub_it/screens/detailed_stats.dart';
+import 'package:bub_it/screens/homepage.dart';
+import 'package:bub_it/screens/recent_links.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,84 +86,99 @@ class Result extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.cancel_outlined))
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.cancel_outlined))
               ],
             ),
             const Text(
               'Your Shortened \nBub-URL:',
               style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
             ),
-Spacer(),
+            Spacer(),
             Center(
               child: Container(
                 height: 50.h,
                 decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Colors.grey.shade200),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(.1),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10))
-                    ],
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(60)),
-                    ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10))
+                  ],
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(60)),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(left: 18.0),
-                      child: Text('bub.junyong.me/floral98', style: const TextStyle(fontSize: 15),),
+                      child: Text(
+                        'bub.junyong.me/floral98',
+                        style: const TextStyle(fontSize: 15),
+                      ),
                     ),
                     Container(
-
-                     // height: 30,
+                      // height: 30,
                       width: 50,
                       decoration: BoxDecoration(
                           color: butColor,
-                          borderRadius:
-                              const BorderRadius.only(topRight: Radius.circular(60), bottomRight: Radius.circular(60))),
-                              child: const Center(
-                                child: Icon(Icons.copy_outlined, color: Colors.white, size: 15,),
-                              ),
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(60),
+                              bottomRight: Radius.circular(60))),
+                      child: const Center(
+                        child: Icon(
+                          Icons.copy_outlined,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                      ),
                     )
                   ],
                 ),
               ),
             ),
-Spacer(),
-                  Center(
-                    child: ElevatedButton(
-                                        onPressed: () {
-                                          
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(160, 45),
-                                          shape: RoundedRectangleBorder(
-                                          side: BorderSide(color: butColor, width: 2),
-                                              //to set border radius to button
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          primary: Colors.white,
-                                        ),
-                                        child: Text(
-                                          'Detailed stats',
-                                          style: TextStyle(
-                                              color: butColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15.sm),
-                                        )),
+            Spacer(),
+            Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => StatsPage()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(160, 45),
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(color: butColor, width: 2),
+                        //to set border radius to button
+                        borderRadius: BorderRadius.circular(10)),
+                    primary: Colors.white,
                   ),
-Spacer(),
-
-                                Center(
-                                  child: Text(
-                                      'My URLs',
-                                      style: TextStyle(
-                                        fontSize: 14.h,
-                                          decoration: TextDecoration.underline),
-                                    ),
-                                ),       
+                  child: Text(
+                    'Detailed stats',
+                    style: TextStyle(
+                        color: butColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sm),
+                  )),
+            ),
+            Spacer(),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RecentLinks()));
+                },
+                child: Text(
+                  'My URLs',
+                  style: TextStyle(
+                      fontSize: 14.h, decoration: TextDecoration.underline),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -186,7 +204,7 @@ class BezierClipper extends CustomClipper<Path> {
         secondEndPoint.dx, secondEndPoint.dy);
 
     var thirdControlPoint =
-    Offset(size.width - (size.width / 9), size.height / 6);
+        Offset(size.width - (size.width / 9), size.height / 6);
     var thirdEndPoint = Offset(size.width, 0.0);
     path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
         thirdEndPoint.dx, thirdEndPoint.dy);
@@ -196,10 +214,10 @@ class BezierClipper extends CustomClipper<Path> {
     path.close();
     return path;
   }
+
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
 
 class BezierHeaderCurves extends StatelessWidget {
   const BezierHeaderCurves({Key? key}) : super(key: key);
@@ -209,7 +227,7 @@ class BezierHeaderCurves extends StatelessWidget {
     return ClipPath(
       clipper: BezierClipper(),
       child: Container(
-        height: MediaQuery.of(context).size.height/6,
+        height: MediaQuery.of(context).size.height / 6,
         color: const Color(0xFFA1887F),
       ),
     );
@@ -226,32 +244,55 @@ class RecentUrls extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 20),
-          child: Align(
-              alignment: Alignment.topLeft,
-              child: Text('Bub-It', style: GoogleFonts.newRocker(fontSize: 20),)),
+          // child: Align(
+              // alignment: Alignment.topLeft,
+              child: Text(
+                'Bub-It',
+                style: GoogleFonts.newRocker(fontSize: 20),
+              ),
+              // ),
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              side: const BorderSide(color: Color(0xFFA1887F), width: 2),
+              primary: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
+            child: Text(
+              '< Back to Homepage',
+              style: GoogleFonts.poppins(color: const Color(0xFFA1887F)),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         Center(
           child: Container(
             padding: const EdgeInsets.only(
               bottom: 5, // Space between underline and text
             ),
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(
-                  color: Colors.grey.shade300,
-                  width: 2.0,
-                ))
-            ),
+                border: Border(
+                    bottom: BorderSide(
+              color: Colors.grey.shade300,
+              width: 2.0,
+            ))),
             child: Text(
               "Your Recent Bub-URLs",
               style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold
-              ),
+                  fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
         )
-
       ],
     );
   }
@@ -263,12 +304,18 @@ class DetailedBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text('Detailed stats', style: GoogleFonts.poppins(color: const Color(0xFFA1887F)),),
+      child: Text(
+        'Detailed stats',
+        style: GoogleFonts.poppins(color: const Color(0xFFA1887F)),
+      ),
       style: ElevatedButton.styleFrom(
         side: const BorderSide(color: Color(0xFFA1887F), width: 2),
         primary: Colors.white,
-      ), onPressed: () {  },
-
+      ),
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => StatsPage()));
+      },
     );
   }
 }
@@ -279,12 +326,13 @@ class CopyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      label: Text("Copy", style: GoogleFonts.poppins(color: Colors.white),),
-      icon: const Icon(Icons.copy),
-      onPressed: (){},
-      style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF795548)
+      label: Text(
+        "Copy",
+        style: GoogleFonts.poppins(color: Colors.white),
       ),
+      icon: const Icon(Icons.copy),
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(primary: const Color(0xFF795548)),
     );
   }
 }

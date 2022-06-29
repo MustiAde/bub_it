@@ -1,5 +1,6 @@
 import 'package:bub_it/constants/colours.dart';
 import 'package:bub_it/constants/widgets.dart';
+import 'package:bub_it/screens/recent_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,6 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final longUrlController = TextEditingController();
+final shortUrlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -42,9 +45,10 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                               width: 320.h,
+                              width: 320.h,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Icon(Icons.link),
                                   Text(
@@ -57,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             TextField(
+                              controller: longUrlController,
                               decoration: InputDecoration(
                                   isDense: true,
                                   border: OutlineInputBorder(
@@ -79,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Container(
                               height: 50.h,
-                             // width: MediaQuery.of(context).size.width,
+                              // width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   border: Border.all(width: .4),
                                   borderRadius: BorderRadius.circular(20)),
@@ -89,8 +94,8 @@ class _HomePageState extends State<HomePage> {
                                     height: 50.w,
                                     width: 190.h,
                                     child: TextField(
+                                      controller: shortUrlController,
                                       decoration: InputDecoration(
-                                          
                                           border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20))),
@@ -99,7 +104,10 @@ class _HomePageState extends State<HomePage> {
                                   Center(
                                       child: Padding(
                                     padding: const EdgeInsets.only(left: 18.0),
-                                    child: Text('alias', style: TextStyle(fontSize: 13.sm),),
+                                    child: Text(
+                                      'alias',
+                                      style: TextStyle(fontSize: 13.sm),
+                                    ),
                                   ))
                                 ],
                               ),
@@ -111,10 +119,19 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'My URL',
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RecentLinks()));
+                                    },
+                                    child: const Text(
+                                      'My URL',
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline),
+                                    ),
                                   ),
                                   ElevatedButton(
                                       onPressed: () {
@@ -152,4 +169,3 @@ class _HomePageState extends State<HomePage> {
         }));
   }
 }
-
