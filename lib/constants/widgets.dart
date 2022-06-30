@@ -314,7 +314,7 @@ class DetailedBoxWidget extends StatelessWidget {
       ),
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => StatsPage()));
+            context, MaterialPageRoute(builder: (context) => DetailedStats()));
       },
     );
   }

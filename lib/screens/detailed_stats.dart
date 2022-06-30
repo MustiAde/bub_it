@@ -1,4 +1,5 @@
 import 'package:bub_it/constants/widgets.dart';
+import 'package:bub_it/screens/recent_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -266,7 +267,7 @@ class BackHome extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const HomePage()));
+            context, MaterialPageRoute(builder: (_) => const RecentLinks()));
       },
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(160, 45),
