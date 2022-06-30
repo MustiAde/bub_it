@@ -147,7 +147,7 @@ class Result extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => StatsPage()));
+                        MaterialPageRoute(builder: (_) => DetailedStats()));
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(160, 45),
@@ -334,5 +334,31 @@ class CopyButton extends StatelessWidget {
       onPressed: () {},
       style: ElevatedButton.styleFrom(primary: const Color(0xFF795548)),
     );
+  }
+}
+
+class AppBalDetail extends StatelessWidget {
+  const AppBalDetail({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leadingWidth: 200.h,
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+          child: Text(
+            'Bub-It',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 23,
+              height: 1.5,
+              color: Colors.grey.shade800,
+            ),
+          ),
+        ));
   }
 }
