@@ -180,15 +180,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<String> ShortLink(String longUrlm) async {
-    String apiLink =
-        'https://cleanuri.com/api/v1/shorten'; //'https://shorturl22.herokuapp.com/api/url/shorten';
+    String apiLink = 'https://shorturl22.herokuapp.com/api/url/shorten';
     final response =
         await http.post(Uri.parse(apiLink), body: {"result_url": longUrlm});
     if (response.statusCode == 200) {
       final Result = jsonDecode(response.body);
       print('Linked successfully');
       return Result('result_url');
-      'linked success';
+      //'linked success';
     } else {
       print('There is an error: ${response.statusCode}');
       print('${response.body}');
