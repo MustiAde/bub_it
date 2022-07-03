@@ -55,14 +55,19 @@ class AppBal extends StatelessWidget {
                 color: butColor,
               ))
         ],
-        leading: const Padding(
+        leading: Padding(
           padding: EdgeInsets.fromLTRB(28.0, 10, 0, 0),
           child: Text(
             'Bub-It',
-            style: TextStyle(
+            style: GoogleFonts.newRocker(
+                fontSize: 20,
                 color: Color(0xFF80593B),
-                fontWeight: FontWeight.bold,
-                fontSize: 23),
+                fontWeight: FontWeight.bold),
+
+            // style: TextStyle(
+            //     color: Color(0xFF80593B),
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 23),
           ),
         ));
   }
@@ -278,31 +283,20 @@ class RecentUrls extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20),
           // child: Align(
           // alignment: Alignment.topLeft,
-          child: Text(
-            'Bub-It',
-            style: GoogleFonts.newRocker(fontSize: 20),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
+            child: Text(
+              'Bub-It',
+              style: GoogleFonts.newRocker(fontSize: 20),
+            ),
           ),
           // ),
         ),
         const SizedBox(
           height: 20,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              side: const BorderSide(color: Color(0xFFA1887F), width: 2),
-              primary: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
-            },
-            child: Text(
-              '< Back to Homepage',
-              style: GoogleFonts.poppins(color: const Color(0xFFA1887F)),
-            ),
-          ),
         ),
         const SizedBox(
           height: 20,

@@ -11,6 +11,7 @@ import 'detailed_stats.dart';
 
 final longUrlController = TextEditingController();
 final shortUrlController = TextEditingController();
+final aliasController = TextEditingController();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -89,33 +90,40 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             Container(
-                              height: 60.h,
+                              // height: 60.h,
                               // width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   border: Border.all(width: .4),
                                   borderRadius: BorderRadius.circular(20)),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    height: 60.w,
-                                    width: 190.h,
+                                    padding: EdgeInsets.only(left: 10, top: 10),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: Text(
+                                      'https://shorturl22.herokuapp.com',
+                                      style: TextStyle(fontSize: 13.sm),
+                                    ),
+                                  ),
+                                  Container(
+                                    // height: 60.w,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
                                     child: TextField(
-                                      controller: shortUrlController,
+                                      controller: aliasController,
+                                      maxLines: null,
                                       decoration: InputDecoration(
+                                          hintText: 'alias',
                                           isDense: true,
                                           border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20))),
                                     ),
                                   ),
-                                  Center(
-                                      child: Padding(
-                                    padding: const EdgeInsets.only(left: 18.0),
-                                    child: Text(
-                                      'alias',
-                                      style: TextStyle(fontSize: 13.sm),
-                                    ),
-                                  ))
                                 ],
                               ),
                             ),

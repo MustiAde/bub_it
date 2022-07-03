@@ -18,39 +18,22 @@ class _RecentLinksState extends State<RecentLinks> {
     return ScreenUtilInit(
         designSize: const Size(360, 800),
         builder: ((context, child) {
-      return Scaffold(
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:  const [
-                  BezierHeaderCurves(),
-                  // SizedBox(height: 30.h,),
-                  RecentUrls(),
-                  RecentUrlComponent(),
-                ],
-              )
-
-            ],
-          ),
-        )
-      );
-
+          return Scaffold(
+              body: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    BezierHeaderCurves(),
+                    // SizedBox(height: 30.h,),
+                    RecentUrls(),
+                    RecentUrlComponent(),
+                  ],
+                )
+              ],
+            ),
+          ));
         }));
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
