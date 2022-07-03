@@ -3,6 +3,7 @@ import 'package:bub_it/screens/detailed_stats.dart';
 import 'package:bub_it/screens/homepage.dart';
 import 'package:bub_it/screens/recent_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -112,33 +113,64 @@ class Result extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: const BorderRadius.all(Radius.circular(60)),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 18.0),
-                      child: Text(
-                        'bub.junyong.me/floral98',
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                    ),
-                    Container(
-                      // height: 30,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: butColor,
-                          borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(60),
-                              bottomRight: Radius.circular(60))),
-                      child: const Center(
-                        child: Icon(
-                          Icons.copy_outlined,
-                          color: Colors.white,
-                          size: 15,
+                child: SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 18.0),
+                          child: Text(
+                            shortUrlController
+                                .text, //'bub.junyong.me/floral98',
+                            style: const TextStyle(fontSize: 15),
+                          ),
                         ),
                       ),
-                    )
-                  ],
+                      Container(
+                        // height: 30,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: butColor,
+                            borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(60),
+                                bottomRight: Radius.circular(60))),
+                        child: Center(
+                          child: Builder(builder: (context) {
+                            return IconButton(
+                              onPressed: () {
+                                Clipboard.setData(ClipboardData(
+                                        text: shortUrlController.text))
+                                    .then(
+                                  (value) => ScaffoldMessenger.of(context)
+                                      .showSnackBar(
+                                    SnackBar(
+                                      duration: const Duration(seconds: 2),
+                                      content: Text(
+                                        'Link Copied',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(color: butColor),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      elevation: 4,
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.copy_outlined,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                            );
+                          }),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -245,12 +277,12 @@ class RecentUrls extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 20),
           // child: Align(
-              // alignment: Alignment.topLeft,
-              child: Text(
-                'Bub-It',
-                style: GoogleFonts.newRocker(fontSize: 20),
-              ),
-              // ),
+          // alignment: Alignment.topLeft,
+          child: Text(
+            'Bub-It',
+            style: GoogleFonts.newRocker(fontSize: 20),
+          ),
+          // ),
         ),
         const SizedBox(
           height: 20,

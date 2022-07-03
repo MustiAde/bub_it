@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'detailed_stats.dart';
+
+final longUrlController = TextEditingController();
+final shortUrlController = TextEditingController();
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -15,8 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final longUrlController = TextEditingController();
-  final shortUrlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -70,9 +73,9 @@ class _HomePageState extends State<HomePage> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(30))),
                             ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
+                            // SizedBox(
+                            //   height: 1.h,
+                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -86,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             Container(
-                              height: 50.h,
+                              height: 60.h,
                               // width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   border: Border.all(width: .4),
@@ -94,11 +97,12 @@ class _HomePageState extends State<HomePage> {
                               child: Row(
                                 children: [
                                   Container(
-                                    height: 50.w,
+                                    height: 60.w,
                                     width: 190.h,
                                     child: TextField(
                                       controller: shortUrlController,
                                       decoration: InputDecoration(
+                                          isDense: true,
                                           border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20))),
@@ -130,15 +134,16 @@ class _HomePageState extends State<HomePage> {
                                               builder: (context) =>
                                                   RecentLinks()));
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       'My URL',
                                       style: TextStyle(
                                           decoration: TextDecoration.underline),
                                     ),
                                   ),
                                   ElevatedButton(
-                                      onPressed: () {
-                                        callShortenUrl();
+                                      onPressed: () async {
+                                        await callShortenUrl();
+
                                         showDialog(
                                             context: context,
                                             builder: (context) {
@@ -175,24 +180,29 @@ class _HomePageState extends State<HomePage> {
 
   callShortenUrl() async {
     String longUrl = longUrlController.text;
-    final String shortUrl = await ShortLink(longUrl);
+    final String shortUrl = await shortLink(longUrl);
+    shortUrlController.text = shortUrl;
     return shortUrl;
   }
 
-  Future<String> ShortLink(String longUrlm) async {
+  Future<String> shortLink(String longUrl) async {
     String apiLink = 'https://shorturl22.herokuapp.com/api/url/shorten';
-    final response =
-        await http.post(Uri.parse(apiLink), body: {"result_url": longUrlm});
+    final response = await http.post(
+      Uri.parse(apiLink),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: json.encode({"longUrl": longUrl}),
+    );
+
     if (response.statusCode == 200) {
       final Result = jsonDecode(response.body);
-      print('Linked successfully');
-      return Result('result_url');
-      //'linked success';
+
+      final String ourShortLink = Result['shortUrl'].toString();
+      return ourShortLink;
     } else {
-      print('There is an error: ${response.statusCode}');
-      print('${response.body}');
-      print('${longUrlController.text}');
-      return 'There was an error';
+      return 'There was an error ${response.body}';
     }
   }
 }
