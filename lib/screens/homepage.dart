@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:bub_it/constants/colours.dart';
 import 'package:bub_it/constants/widgets.dart';
 import 'package:bub_it/screens/recent_links.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final longUrlController = TextEditingController();
-final shortUrlController = TextEditingController();
+  final shortUrlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -135,6 +138,7 @@ final shortUrlController = TextEditingController();
                                   ),
                                   ElevatedButton(
                                       onPressed: () {
+                                        callShortenUrl();
                                         showDialog(
                                             context: context,
                                             builder: (context) {
@@ -167,5 +171,29 @@ final shortUrlController = TextEditingController();
                 ],
               ));
         }));
+  }
+
+  callShortenUrl() async {
+    String longUrl = longUrlController.text;
+    final String shortUrl = await ShortLink(longUrl);
+    return shortUrl;
+  }
+
+  Future<String> ShortLink(String longUrlm) async {
+    String apiLink =
+        'https://cleanuri.com/api/v1/shorten'; //'https://shorturl22.herokuapp.com/api/url/shorten';
+    final response =
+        await http.post(Uri.parse(apiLink), body: {"result_url": longUrlm});
+    if (response.statusCode == 200) {
+      final Result = jsonDecode(response.body);
+      print('Linked successfully');
+      return Result('result_url');
+      'linked success';
+    } else {
+      print('There is an error: ${response.statusCode}');
+      print('${response.body}');
+      print('${longUrlController.text}');
+      return 'There was an error';
+    }
   }
 }
