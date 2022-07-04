@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bub_it/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,10 +30,16 @@ class _RedirectPageState extends State<RedirectPage> {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Bub-It',
-                style: GoogleFonts.newRocker(fontSize: 20),
+              padding: const EdgeInsets.all(32.0),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
+                child: Text(
+                  'Bub-It',
+                  style: GoogleFonts.newRocker(fontSize: 20),
+                ),
               ),
             ),
           ),

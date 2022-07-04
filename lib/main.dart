@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      title: 'Mind Pal',
+      title: 'Bub-It',
       home: const HomePage(),
     );
   }

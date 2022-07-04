@@ -83,99 +83,99 @@ class Result extends StatelessWidget {
     return AlertDialog(
       content: Container(
         color: Color(0xFFFFFBF5),
-        width: 330.h,
-        height: 300.h,
+        width: 350.h,
+        height: 350.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.cancel_outlined))
-              ],
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.cancel_outlined)),
             ),
-            const Text(
-              'Your Shortened \nBub-URL:',
-              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Your Shortened \nBub-URL:',
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              ),
             ),
             Spacer(),
-            Center(
-              child: Container(
-                height: 50.h,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.grey.shade200),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10))
-                  ],
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(60)),
-                ),
-                child: SingleChildScrollView(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 18.0),
-                          child: Text(
-                            shortUrlController
-                                .text, //'bub.junyong.me/floral98',
-                            style: const TextStyle(fontSize: 15),
-                          ),
+            Container(
+              // height: 50.h,
+              decoration: BoxDecoration(
+                border: Border.all(width: 2, color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10))
+                ],
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(60)),
+              ),
+              child: SingleChildScrollView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 18.0),
+                        child: Text(
+                          shortUrlController.text,
+                          //'bub.junyong.me/floral98',
+                          style: const TextStyle(fontSize: 15),
                         ),
                       ),
-                      Container(
-                        // height: 30,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: butColor,
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(60),
-                                bottomRight: Radius.circular(60))),
-                        child: Center(
-                          child: Builder(builder: (context) {
-                            return IconButton(
-                              onPressed: () {
-                                Clipboard.setData(ClipboardData(
-                                        text: shortUrlController.text))
-                                    .then(
-                                  (value) => ScaffoldMessenger.of(context)
-                                      .showSnackBar(
-                                    SnackBar(
-                                      duration: const Duration(seconds: 2),
-                                      content: Text(
-                                        'Link Copied',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(color: butColor),
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      elevation: 4,
-                                      backgroundColor: Colors.white,
+                    ),
+                    Container(
+                      // height: 30,
+                      width: 50,
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      decoration: BoxDecoration(
+                          color: butColor,
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(60),
+                              bottomRight: Radius.circular(60))),
+                      child: Center(
+                        child: Builder(builder: (context) {
+                          return IconButton(
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(
+                                      text: shortUrlController.text))
+                                  .then(
+                                (value) =>
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(seconds: 2),
+                                    content: Text(
+                                      'Link Copied',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: butColor),
                                     ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    elevation: 4,
+                                    backgroundColor: Colors.white,
                                   ),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.copy_outlined,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            );
-                          }),
-                        ),
-                      )
-                    ],
-                  ),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.copy_outlined,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          );
+                        }),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -376,15 +376,33 @@ class AppBalDetail extends StatelessWidget {
         leadingWidth: 200.h,
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-          child: Text(
-            'Bub-It',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 23,
-              height: 1.5,
-              color: Colors.grey.shade800,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
+            child: Text(
+              'Bub-It',
+              style: GoogleFonts.newRocker(
+                  fontSize: 23,
+                  color: Color(0xFF80593B),
+                  fontWeight: FontWeight.bold),
+
+              // style: TextStyle(
+              //     color: Color(0xFF80593B),
+              //     fontWeight: FontWeight.bold,
+              //     fontSize: 23),
             ),
           ),
+          // Text(
+          //   'Bub-It',
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 23,
+          //     height: 1.5,
+          //     color: Colors.grey.shade800,
+          //   ),
+          // ),
         ));
   }
 }

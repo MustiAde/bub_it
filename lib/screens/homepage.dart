@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:bub_it/constants/colours.dart';
 import 'package:bub_it/constants/widgets.dart';
+import 'package:bub_it/screens/not_found.dart';
 import 'package:bub_it/screens/recent_links.dart';
+import 'package:bub_it/screens/redirect_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,6 +39,8 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       width: 320.h,
                       height: 370.h,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 30),
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -45,140 +50,185 @@ class _HomePageState extends State<HomePage> {
                           ],
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 30),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 320.h,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Icon(Icons.link),
-                                  Text(
-                                    'Enter your long URL here',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sm),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            TextField(
-                              controller: longUrlController,
-                              decoration: InputDecoration(
-                                  isDense: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30))),
-                            ),
-                            // SizedBox(
-                            //   height: 1.h,
-                            // ),
-                            Row(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 320.h,
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Icon(Icons.link),
                                 Text(
-                                  'Customize your link',
+                                  'Enter your long URL here',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16.sm),
+                                      fontSize: 15.sm),
                                 ),
                               ],
                             ),
-                            Container(
-                              // height: 60.h,
-                              // width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  border: Border.all(width: .4),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(left: 10, top: 10),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: Text(
-                                      'https://shorturl22.herokuapp.com',
-                                      style: TextStyle(fontSize: 13.sm),
-                                    ),
-                                  ),
-                                  Container(
-                                    // height: 60.w,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    child: TextField(
-                                      controller: aliasController,
-                                      maxLines: null,
-                                      decoration: InputDecoration(
-                                          hintText: 'alias',
-                                          isDense: true,
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20))),
-                                    ),
-                                  ),
-                                ],
+                          ),
+                          TextField(
+                            controller: longUrlController,
+                            decoration: InputDecoration(
+                                isDense: true,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30))),
+                          ),
+                          // SizedBox(
+                          //   height: 1.h,
+                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(Icons.link),
+                              Text(
+                                'Customize your link',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sm),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RecentLinks()));
-                                    },
-                                    child: Text(
-                                      'My URL',
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline),
-                                    ),
+                            ],
+                          ),
+                          Container(
+                            // height: 60.h,
+                            // width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                border: Border.all(width: .4),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(left: 10, top: 10),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Text(
+                                    'https://shorturl22.herokuapp.com',
+                                    style: TextStyle(fontSize: 13.sm),
                                   ),
-                                  ElevatedButton(
-                                      onPressed: () async {
-                                        await callShortenUrl();
-
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return Result();
-                                            });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        minimumSize: Size(130.h, 45.h),
-                                        shape: RoundedRectangleBorder(
-                                            //to set border radius to button
+                                ),
+                                Container(
+                                  // height: 60.w,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  child: TextField(
+                                    controller: aliasController,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                        hintText: 'alias',
+                                        isDense: true,
+                                        border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(15)),
-                                        primary: Color(0xFF80593B),
-                                      ),
-                                      child: Text(
-                                        'Bub it',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sm),
-                                      ))
-                                ],
+                                                BorderRadius.circular(20))),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RecentLinks()));
+                                  },
+                                  child: Text(
+                                    'My URL',
+                                    style: TextStyle(
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      await callShortenUrl();
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Result();
+                                          });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(130.h, 45.h),
+                                      shape: RoundedRectangleBorder(
+                                          //to set border radius to button
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      primary: Color(0xFF80593B),
+                                    ),
+                                    child: Text(
+                                      'Bub it',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sm),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 20,
+                    right: 20,
+                    child: Column(
+                      children: [
+                        Text('Temporary buttons for the QA team'),
+                        Text("Backend didn't drop APIs for these pages"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                              child: Text(
+                                'Error 404 Page',
+                                style: GoogleFonts.poppins(
+                                    color: const Color(0xFFA1887F)),
                               ),
-                            )
+                              style: ElevatedButton.styleFrom(
+                                side: const BorderSide(
+                                    color: Color(0xFFA1887F), width: 2),
+                                primary: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NotFound()));
+                              },
+                            ),
+                            ElevatedButton(
+                              child: Text(
+                                'Redirect Page',
+                                style: GoogleFonts.poppins(
+                                    color: const Color(0xFFA1887F)),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                side: const BorderSide(
+                                    color: Color(0xFFA1887F), width: 2),
+                                primary: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RedirectPage()));
+                              },
+                            ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],
