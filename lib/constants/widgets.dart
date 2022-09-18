@@ -3,6 +3,7 @@ import 'package:bub_it/screens/detailed_stats.dart';
 import 'package:bub_it/screens/homepage.dart';
 import 'package:bub_it/screens/recent_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -54,14 +55,19 @@ class AppBal extends StatelessWidget {
                 color: butColor,
               ))
         ],
-        leading: const Padding(
+        leading: Padding(
           padding: EdgeInsets.fromLTRB(28.0, 10, 0, 0),
           child: Text(
             'Bub-It',
-            style: TextStyle(
+            style: GoogleFonts.newRocker(
+                fontSize: 20,
                 color: Color(0xFF80593B),
-                fontWeight: FontWeight.bold,
-                fontSize: 23),
+                fontWeight: FontWeight.bold),
+
+            // style: TextStyle(
+            //     color: Color(0xFF80593B),
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 23),
           ),
         ));
   }
@@ -77,65 +83,96 @@ class Result extends StatelessWidget {
     return AlertDialog(
       content: Container(
         color: Color(0xFFFFFBF5),
-        width: 330.h,
-        height: 300.h,
+        width: 350.h,
+        height: 350.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.cancel_outlined))
-              ],
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.cancel_outlined)),
             ),
-            const Text(
-              'Your Shortened \nBub-URL:',
-              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Your Shortened \nBub-URL:',
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              ),
             ),
             Spacer(),
-            Center(
-              child: Container(
-                height: 50.h,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.grey.shade200),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10))
-                  ],
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(60)),
-                ),
+            Container(
+              // height: 50.h,
+              decoration: BoxDecoration(
+                border: Border.all(width: 2, color: Colors.grey.shade200),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10))
+                ],
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(60)),
+              ),
+              child: SingleChildScrollView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 18.0),
-                      child: Text(
-                        'bub.junyong.me/floral98',
-                        style: const TextStyle(fontSize: 15),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 18.0),
+                        child: Text(
+                          shortUrlController.text,
+                          //'bub.junyong.me/floral98',
+                          style: const TextStyle(fontSize: 15),
+                        ),
                       ),
                     ),
                     Container(
                       // height: 30,
                       width: 50,
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
                       decoration: BoxDecoration(
                           color: butColor,
                           borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(60),
                               bottomRight: Radius.circular(60))),
-                      child: const Center(
-                        child: Icon(
-                          Icons.copy_outlined,
-                          color: Colors.white,
-                          size: 15,
-                        ),
+                      child: Center(
+                        child: Builder(builder: (context) {
+                          return IconButton(
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(
+                                      text: shortUrlController.text))
+                                  .then(
+                                (value) =>
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: const Duration(seconds: 2),
+                                    content: Text(
+                                      'Link Copied',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: butColor),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    elevation: 4,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.copy_outlined,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          );
+                        }),
                       ),
                     )
                   ],
@@ -245,32 +282,21 @@ class RecentUrls extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 20),
           // child: Align(
-              // alignment: Alignment.topLeft,
-              child: Text(
-                'Bub-It',
-                style: GoogleFonts.newRocker(fontSize: 20),
-              ),
-              // ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              side: const BorderSide(color: Color(0xFFA1887F), width: 2),
-              primary: Colors.white,
-            ),
-            onPressed: () {
+          // alignment: Alignment.topLeft,
+          child: InkWell(
+            onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
             },
             child: Text(
-              '< Back to Homepage',
-              style: GoogleFonts.poppins(color: const Color(0xFFA1887F)),
+              'Bub-It',
+              style: GoogleFonts.newRocker(fontSize: 20),
             ),
           ),
+          // ),
+        ),
+        const SizedBox(
+          height: 20,
         ),
         const SizedBox(
           height: 20,
@@ -350,15 +376,33 @@ class AppBalDetail extends StatelessWidget {
         leadingWidth: 200.h,
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-          child: Text(
-            'Bub-It',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 23,
-              height: 1.5,
-              color: Colors.grey.shade800,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            },
+            child: Text(
+              'Bub-It',
+              style: GoogleFonts.newRocker(
+                  fontSize: 23,
+                  color: Color(0xFF80593B),
+                  fontWeight: FontWeight.bold),
+
+              // style: TextStyle(
+              //     color: Color(0xFF80593B),
+              //     fontWeight: FontWeight.bold,
+              //     fontSize: 23),
             ),
           ),
+          // Text(
+          //   'Bub-It',
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 23,
+          //     height: 1.5,
+          //     color: Colors.grey.shade800,
+          //   ),
+          // ),
         ));
   }
 }
